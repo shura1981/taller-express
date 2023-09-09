@@ -12,7 +12,8 @@ startServer();
 let mainWindow, secondWin;
 
 function createTray(win) {
-    const tray = new Tray(icon)
+    const iconImg = nativeImage.createFromPath(path.join(__dirname, 'public', 'assets','images','notifications.png'))
+    const tray = new Tray(iconImg.resize({ width: 16, height: 16 }))
     tray.on('double-click', () => {
         win.isVisible() ? win.hide() : win.show();
     });
@@ -85,6 +86,7 @@ function createTray(win) {
     tray.setToolTip('This is my application.')
     tray.setContextMenu(contextMenu)
 
+//set size tray
 
 
 }
@@ -214,5 +216,7 @@ ipcMain.on('product:new', (e, data) => {
         subtitle: subtitle,
         body: body,
     }, () => { console.log("show"); }, () => { console.log("click"); }, () => { console.log("close"); });
+    //cerrar secondWin
+    secondWin.close();
 
 });
