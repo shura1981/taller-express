@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Nueva Entrada</title>
+
+  <style>
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #303030;
+        color: white;
+      }
+
+      .form-control,
+      .form-control:hover {
+        background: rgba(31, 31, 31, 0.705);
+        color: white;
+      }
+
+      .form-control:focus {
+        background: rgba(31, 31, 31, 0.877);
+
+      }
+
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background: #f5f5f5;
+        color: #4f4f4f;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Interface -->
+  <form class="p-4">
+    <div class="form-group">
+      <input type="text" id="id" class="form-control" placeholder="id del lote" autofocus>
+    </div>
+    <div class="form-group">
+      <input type="text" id="nombre" class="form-control" placeholder="Nombre">
+    </div>
+    <div class="form-group">
+      <input type="text" id="lote" class="form-control" placeholder="Lote">
+    </div>
+    <button class="btn btn-primary btn-block">
+      Guardar
+    </button>
+  </form>
+
+  <!-- Logic -->
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const id = document.querySelector('#id').value;
+      const nombre = document.querySelector('#nombre').value;
+      const lote = document.querySelector('#lote').value;
+
+      const newProduct = {
+        id,
+        nombre,
+        lote,
+
+      };
+
+
+      const message = {
+        title: "hola", subtitle: "prueba", body: "esto es una prueba"
+      }
+
+
+
+      ipcRenderer.send('product:new', message);
+    });
+
+  </script>
+
+  <script>
+    // obtener queryparam id de la url
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    console.log("id:", id);
+
+
+
+  </script>
+
+</body>
+
+</html>
